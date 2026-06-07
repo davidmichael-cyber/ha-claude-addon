@@ -1,5 +1,4 @@
-ARG BUILD_FROM=ghcr.io/home-assistant/aarch64-base-python:3.12
-FROM $BUILD_FROM
+FROM python:3.12-alpine
 
 RUN pip3 install --no-cache-dir \
     fastapi==0.115.5 \
@@ -8,7 +7,5 @@ RUN pip3 install --no-cache-dir \
 
 WORKDIR /app
 COPY src/ /app/
-COPY run.sh /run.sh
-RUN chmod +x /run.sh
 
-CMD ["/run.sh"]
+CMD ["python3", "/app/main.py"]

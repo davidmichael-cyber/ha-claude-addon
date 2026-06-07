@@ -10,6 +10,7 @@ Surfaces:
 
 from __future__ import annotations
 
+import json
 import logging
 import os
 from pathlib import Path
@@ -23,8 +24,17 @@ from ha_context import get_ha_context
 
 log = logging.getLogger(__name__)
 
-OPENCLAW_URL = os.environ.get("OPENCLAW_URL", "http://100.84.106.76:18789").rstrip("/")
-OPENCLAW_TOKEN = os.environ.get("OPENCLAW_TOKEN", "")
+# Supervisor writes add-on config to /data/options.json
+_opts: dict = {}
+_opts_path = Path("/data/options.json")
+if _opts_path.exists():
+    try:
+        _opts = json.loads(_opts_path.read_text())
+    except Exception:
+        pass
+
+OPENCLAW_URL = (_opts.get("openclaw_url") or os.environ.get("OPENCLAW_URL", "http://100.84.106.76:18789")).rstrip("/")
+OPENCLAW_TOKEN = _opts.get("openclaw_token") or os.environ.get("OPENCLAW_TOKEN", "")
 HA_API_URL = os.environ.get("HA_API_URL", "http://supervisor/core")
 HA_TOKEN = os.environ.get("SUPERVISOR_TOKEN") or os.environ.get("HA_TOKEN", "")
 PORT = int(os.environ.get("PORT", 7123))
