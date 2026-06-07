@@ -22,7 +22,7 @@ ports:
   7123/tcp: null
 
 options:
-  openclaw_url: "http://100.84.106.76:18789"
+  openclaw_url: "https://davids-mac-mini.tail256265.ts.net"
   openclaw_token: ""
   ha_entities_max: 120
 
