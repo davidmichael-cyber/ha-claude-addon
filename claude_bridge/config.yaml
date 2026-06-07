@@ -1,0 +1,32 @@
+name: "Claude Bridge"
+description: "Nova AI assistant — OpenClaw proxy for HA Assist, Lovelace panel, and automations"
+version: "1.0.0"
+slug: claude_bridge
+url: "https://github.com/davidmichael-cyber/ha-claude-addon"
+init: false
+
+arch:
+  - aarch64
+  - amd64
+  - armhf
+  - armv7
+
+# Lovelace panel via ingress
+ingress: true
+ingress_port: 7123
+panel_icon: mdi:brain
+panel_title: Nova
+
+# Expose port for HA integrations (OpenAI Conversation) to reach us
+ports:
+  7123/tcp: null
+
+options:
+  openclaw_url: "http://100.84.106.76:18789"
+  openclaw_token: ""
+  ha_entities_max: 120
+
+schema:
+  openclaw_url: str
+  openclaw_token: str
+  ha_entities_max: int
